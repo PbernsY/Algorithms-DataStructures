@@ -41,15 +41,15 @@ def make_tree(POSTFIXNOTATION):
 
 def evaluate(node):
 	if not node.right and not node.left:
-		return node.value
+		return int(node.value)
 	else:
 		return OPERATORS[node.value](evaluate(node.left), (evaluate(node.right)))
 
 
 
-postfix = "ab+ef*g*-"
+postfix = "12+"
 r = make_tree(postfix)
-inorder_traversal(r)
+print(evaluate(r))
 
 
 
