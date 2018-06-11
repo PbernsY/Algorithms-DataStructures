@@ -10,17 +10,22 @@ class Node(object):
 		return self.data
 	def set_data(self, d):
 		self.data = d
-
+	def count(self):
+		return 1 if not self.next_node else 1 + self.next_node.count()
 class LinkedList(object):
 	def __init__(self, root = None):
 		self.root = root
-		self.size = 0
 	def size_list(self):
 		return self.size
 	def add(self, data):
-		new_node = Node(data, self.root)
-		self.root = new_node
-		self.size += 1
+		if not self.root:
+			self.root = Node(data)
+		else:
+			current_node = self.root
+			while current_node.next_node:
+				current_node = current_node.next_node
+			current_node.next_node = Node(data)
+
 	def remove(self, d):
 		current_node = self.root
 		prev_node = None
@@ -30,7 +35,6 @@ class LinkedList(object):
 					prev_node.set_next_node(current_node.get_next_node())
 				else:
 					self.root = current_node
-				self.size -= 1 
 				return True
 			else:
 				prev_node = current_node
@@ -41,6 +45,13 @@ class LinkedList(object):
 		while current_node and current_node.get_data() != finder:
 			current_node = current_node.get_next_node()
 		return current_node
+
+	def after(self, item):
+		current_node = self.find(item)
+		_value = current_node.get_next_node()
+		return _value.data
+	def count(self):
+		return 0 if not self.root else self.root.count()
 	
 	
 
@@ -48,6 +59,5 @@ mylist = LinkedList()
 mylist.add(5)
 mylist.add(8)
 mylist.add(12)
-mylist.remove(8)
-print(mylist.remove(12))
-print(mylist.find(8))
+
+print(mylist.count())
