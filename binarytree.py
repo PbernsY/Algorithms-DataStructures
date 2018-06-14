@@ -3,64 +3,39 @@ class Node(object):
 		self.value = value
 		self.right_child = None
 		self.left_child = None 
-
-	def _insert(self, data):
-		if self.value == data:
-			return False
-		elif self.value > data:
-			if self.left_child:
-				return self.left_child._insert(data)
-			else:
-				self.left_child = Node(data)
-				return True
-		else:
-			if self.right_child:
-				return self.right_child._insert(data)
-			else:
-				self.right_child = Node(data)
-				return True
-
-	def _print_tree(self, current_node):
-		if current_node != None:
-			self._print_tree(current_node.left_child)
-			print(str(current_node.value))
-			self._print_tree(current_node.right_child)
-
-	def _height(self, current_node, current_height):
-		if current_node == None: return current_height
-		left_height = self._height(current_node.left_child, current_height + 1)
-		right_height = self._height(current_node.right_child, current_height + 1)
-		return max(left_height, right_height)
-
-
 class BST(object):
 	def __init__(self):
 		self.root = None
 
-	def insert(self, value):
+	def add(self, data):
+		def _add(node_instance):
+			if not node_instance:
+				return Node(data)
+			if node_instance.value < data:
+				node_instance.right_child = _add(node_instance.right_child)
+			elif node_instance.value > data:
+				node_instance.left_child = _add(node_instance.left_child)
+			return node_instance
 		if self.root:
-			return self.root._insert(value)
-		else:			
-			self.root = Node(value)
-
-	def print_tree(self):
-		if self.root != None:
-			self.root._print_tree(self.root)
-
-
-	def height(self):
-		if self.root != None:
-			return self.root._height(self.root, 0)
+		 _add(self.root)
 		else:
-			return 0
+			self.root = Node(data)
+
+
+	def in_order_print(self):
+		def _in_order_print(node_instance):
+			if node_instance:
+				_in_order_print(node_instance.left_child)
+				print((node_instance.value))
+				_in_order_print(node_instance.right_child)
+		return(_in_order_print(self.root))
 
 
 
-bst = BST()
-
-for i in range(0, 20):
-	bst.insert(i)
-
-
-bst.print_tree()
-print(bst.height())
+	def height1(self):
+		def _height1(current_node, current_height):
+			if current_node == None: return current_height
+			left_height = _height1(current_node.left_child, current_height + 1)
+			right_height = _height1(current_node.right_child, current_height + 1)
+			return max(left_height, right_height)
+		return _height1(self.root, 0)
