@@ -10,6 +10,8 @@ class Node(object):
 		return self.data
 	def set_data(self, data):
 		self.data = data
+	def __str__(self):
+		return str(self.data)
 class LinkedList(object):
 	def __init__(self, root = None):
 		self.root = root
@@ -48,6 +50,23 @@ class LinkedList(object):
 		def _count(node):
 			return 0 if not node else 1 + _count(node.next_node)
 		return _count(self.root)
+
+	def __len__(self):
+		return self.count()
+
+
+	def __getitem__(self, i):
+		if i >= len(self):
+			raise IndexError("LinkedList index out of range.")
+		current_node = self.root
+		for _ in range(i):
+			current_node = current_node.next_node
+		return current_node
+
+	def __str__(self):
+		return self.data
+
+
 		
 	
 	
@@ -56,5 +75,6 @@ mylist = LinkedList()
 mylist.add(5)
 mylist.add(8)
 mylist.add(12)
+print(mylist[1])
 
 print(mylist.count())
