@@ -63,14 +63,6 @@ class LinkedList(object):
 			current_node = current_node.next_node
 		return current_node
 
-	def __str__(self):
-		return self.data
-
-
-		
-	
-	
-
 mylist = LinkedList()
 mylist.add(5)
 mylist.add(8)
