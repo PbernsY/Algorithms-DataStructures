@@ -51,6 +51,41 @@ class LinkedList(object):
 			return 0 if not node else 1 + _count(node.next_node)
 		return _count(self.root)
 
+
+	def recur_even_elements(self):
+		def _recur_even_elements(ptr, count):
+			if not ptr:
+				return count
+			if ptr.data % 2 == 0:
+				return _recur_even_elements(ptr.next_node, count + 1)
+			else:
+				return _recur_even_elements(ptr.next_node, count)
+		return _recur_even_elements(self.root, 0)
+
+	def recur_duplicates(self):
+		def _recur_duplicates(ptr, item):
+			if not ptr:
+				return False
+			elif ptr.data == item:
+				return True
+			return _recur_duplicates(ptr.next_node, ptr.data)
+		return _recur_duplicates(self.root, None)
+
+	def recur_largest(self):
+		def _recur_largest(ptr, largest):
+			if not ptr:
+				return largest
+			else:
+				if ptr.data > largest:
+					return _recur_largest(ptr.next_node, ptr.data)
+		
+				return _recur_largest(ptr.next_node, largest)
+		return _recur_largest(self.root, self.root.data)
+
+
+
+
+
 	def __len__(self):
 		return self.count()
 
@@ -65,8 +100,11 @@ class LinkedList(object):
 
 mylist = LinkedList()
 mylist.add(5)
+mylist.add(5)
 mylist.add(8)
 mylist.add(12)
 print(mylist[1])
-
+print(mylist.recur_even_elements())
+print(mylist.recur_duplicates())
+print(mylist.recur_largest())
 print(mylist.count())
